@@ -1,5 +1,5 @@
 <?php
-namespace MasterSE\CarDealer;
+namespace MasterSE\CarDealer\Domain\Model;
 
 class Tire
 {

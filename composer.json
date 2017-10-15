@@ -1,0 +1,17 @@
+{
+    "name": "master-se/car-dealer",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oliver Hader",
+            "email": "oliver@typo3.org"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "MasterSE\\CarDealer\\": "src/"
+        }
+    }
+}

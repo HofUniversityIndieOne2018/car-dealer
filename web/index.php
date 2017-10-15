@@ -1,8 +1,6 @@
 <?php
-require_once 'Brand.php';
-require_once 'Car.php';
-require_once 'Tire.php';
-require_once 'CarFactory.php';
+// only make use of Composer class auto-loader
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $data = [
 	[
@@ -29,7 +27,8 @@ $data = [
 	]
 ];
 
-$factory = new \MasterSE\CarDealer\CarFactory();
+$factory = new \MasterSE\CarDealer\Domain\Model\CarFactory();
 $cars = $factory->createMultiple($data);
 
-var_dump($cars);
+$view = new \MasterSE\CarDealer\View\CarView();
+$view->renderMultiple($cars);
