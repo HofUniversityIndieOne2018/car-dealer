@@ -5,29 +5,40 @@ use MasterSE\CarDealer\Domain\Model\Car;
 
 class CarView
 {
-    public function renderMultiple(array $cars)
+    /**
+     * @param array $cars
+     * @return string
+     */
+    public function renderMultiple(array $cars): string
     {
+        $content = '';
         foreach ($cars as $car)	{
-            $this->renderSingle($car);
+            $content .= $this->renderSingle($car);
         }
+        return $content;
     }
 
-    public function renderSingle(Car $car)
+    /**
+     * @param Car $car
+     * @return string
+     */
+    public function renderSingle(Car $car): string
     {
-        echo '<ul>';
-        echo '<li>Brand: ' . $car->getBrand()->getName() . '</li>';
-        echo '<li>VIN: ' . $car->getVin() . '</li>';
-        echo '<li>Color: ' . $car->getColor() . '</li>';
+        $content = '<ul>';
+        $content .= '<li>Brand: ' . $car->getBrand()->getName() . '</li>';
+        $content .= '<li>VIN: ' . $car->getVin() . '</li>';
+        $content .= '<li>Color: ' . $car->getColor() . '</li>';
 
         foreach ($car->getTires() as $index => $tire) {
-            echo '<li>Tire: #' . ($index + 1);
-            echo '<ul>';
-            echo '<li>Tread depth:' . $tire->getTreadDepth() . '</li>';
-            echo '<li>Pressure:' . $tire->getPressure() . '</li>';
-            echo '</ul>';
-            echo '</li>';
+            $content .= '<li>Tire: #' . ($index + 1);
+            $content .= '<ul>';
+            $content .= '<li>Tread depth:' . $tire->getTreadDepth() . '</li>';
+            $content .= '<li>Pressure:' . $tire->getPressure() . '</li>';
+            $content .= '</ul>';
+            $content .= '</li>';
         }
 
-        echo '</ul>';
+        $content .= '</ul>';
+        return $content;
     }
 }
