@@ -17,25 +17,82 @@ git checkout step-1
 
 # Exercise for this step
 
-![Basic Car model](exercise/step-1/CarModel.png)
-
 **Tasks**
 
-* model a car using the classes `Car`, `Brand` and `Tire`
-* implement constructors for the required class properties
-* create two different instances of a car of same brand "Mercedes" having
-    * 1st: `vin=WDB12345600000001`, `color=orange`, four `Tire` instances having
-		+ same properties, e.g. `treadDepth=8.0`, `pressure=3.2`
-    * 2nd: `vin=WDB12345600000002`, `color=green`, four `Tire` instances having
-		+ same properties, e.g. `treadDepth=5.5`, `pressure=3.1`
-* for the time being, put everything in one file `index.php`
+* separate concerns by introducing the proper model-view-controller (MVC) pattern
+* instead of using `echo` directly in `CarView`, concatenate the HTML result and return the string
+* move the code of `index.php` to a new `CarController` class in namespace `MasterSE\CarDealer\Controller`
 
-### Parts of new index.php
+### Adjusted CarView.php
 
 ``` {.php .numberLines}
 <?php
-class Car { ... }
-class Brand { ... }
-class Tire { ... }
-// next: create instances
+namespace MasterSE\CarDealer\View;
+
+class CarView
+{
+	public function renderMultiple(array $cars): string
+	{
+		$content = '';
+		// @todo implement the rest of the output
+		// foreach ($cars as $car)
+		return $content;
+	}
+
+	public function renderSingle(Car $car): string
+	{
+		$content = '';
+		$content .= '<ul>';
+		$content .= '<li>Brand: ' . $car->getBrand()->getName() . '</li>';
+		// @todo implement the rest of the output
+		$content .= '/<ul>';
+	}
+}
+```
+
+### Parts of new CarController.php
+
+``` {.php .numberLines}
+<?php
+namespace MasterSE\CarDealer\Controller;
+
+class CarController
+{
+	private $factory;
+	private $view;
+
+	public function __construct(CarFactory $factory, CarView $view)
+	{
+		$this->factory = $factory;
+		$this->view = $view;
+	}
+
+	public function listAction(): string
+	{
+		$cars = $this->factory
+			->createMultiple($this->retrieveData());
+		return $this->view
+			->renderMultiple($cars);
+	}
+
+	private function retrieveData(): array
+	{
+		return [
+			// ...
+		];
+	}
+}
+```
+
+### Adjusted index.php
+
+The instances of `CarFactory` and `CarView` and handed over (manually injected) to the `CarController`.
+
+``` {.php .numberLines}
+<?php
+$controller = new \MasterSE\CarDealer\Domain\Model\CarController(
+	new \MasterSE\CarDealer\Domain\Model\CarFactory(),
+	new \MasterSE\CarDealer\View\CarView()
+);
+echo $controller->listAction();
 ```
