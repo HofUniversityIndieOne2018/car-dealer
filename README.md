@@ -17,6 +17,8 @@ git checkout step-1
 
 # Exercise for this step
 
+![MVC Pattern Overview](exercise/step-4/MvcOverview.png)
+
 **Tasks**
 
 * separate concerns by introducing the proper model-view-controller (MVC) pattern
